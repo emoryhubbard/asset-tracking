@@ -1,0 +1,835 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "Asset API MongoDB with OAuth",
+      "description": "[NOTE: The W10 working Endpoint is the first one listed:  '/assets/']. CSE 341 Final Project Asset API MongoDB with OAuth. All routes will be protected, and /create, /update, and /delete require specific permissions.",
+      "version": "1.0"
+    },
+    "host": "asset-tracker-ws7z.onrender.com",
+    "basePath": "/",
+    "schemes": [
+      "https"
+    ],
+    "paths": {
+        "/assets/": {
+        "get": {
+            "tags": [
+                "Assets"
+            ],
+            "description": "Get all assets in MongoDB asset API",
+            "parameters": [],
+            "responses": {
+              "200": {
+                "description": "OK"
+              }
+            }
+          }
+        },
+        "/assets/{assetId}": {
+          "get": {
+            "tags": [
+                "Assets"
+            ],
+            "description": "Get single asset by id (e.g., 'AS010'). Asset ID must be two alpha characters (e.g., 'AS') that are case-insensitive, followed by three digits, padded left with zeros (e.g., '005').",
+            "example": "'AS010', 'AS004', 'AS012'",
+            "parameters": [
+              {
+                "name": "assetId",
+                "in": "path",
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "OK"
+              }
+            }
+          },
+          "put": {
+            "tags": [
+                "Assets"
+            ],
+            "description": "Update an asset by id (e.g., 'AS010'). Asset ID must be two alpha characters (e.g., 'AS') that are case-insensitive, followed by three digits, padded left with zeros (e.g., '005').",
+            "example": "'AS010', 'AS004', 'AS012'",
+            "parameters": [
+              {
+                "name": "assetId",
+                "in": "path",
+                "required": true,
+                "type": "string"
+              },
+              {
+                "name": "body",
+                "in": "body",
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "SerialNumber": "EQ-934R2",
+                    "Brand": "Sony",
+                    "PurchaseDate": "18 Dec 2019",
+                    "Model": "Vista",
+                    "ModelNum": "VA-934",
+                    "PurchasePrice": "13900",
+                    "image": "https://images-na.ssl-images-amazon.com/images/I/71%2B%2B%2B%2Bq%2BqgL._AC_SL1500_.jpg",
+                    "PhysicalDescription": "4k display, 32GB RAM, 1TB SSD",
+                    "Status": "active",
+                    "Condition": "good",
+                    "Building": "West 3B",
+                    "User": "rsmithson@tesla.com"
+                  }
+                }
+              }
+            ],
+            "responses": {
+              "204": {
+                "description": "No Content"
+              },
+              "201": {
+                "description": "Record updated successfully"
+              },
+              "500": {
+                "description": "Internal Server Error"
+              }
+            }
+          },
+          "delete": {
+            "tags": [
+                "Assets"
+            ],
+            "description": "Delete an asset by id (e.g., 'AS010'). Asset ID must be two alpha characters (e.g., 'AS') that are case-insensitive, followed by three digits ('005').",
+            "example": "'AS010', 'AS004', 'AS012'",
+            "parameters": [
+              {
+                "name": "assetId",
+                "in": "path",
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "Record successfully deleted"
+              },
+              "500": {
+                "description": "Record deletion unsuccessful. Internal Server Error"
+              },
+              "404": {
+                "description": "Deletion unsuccessful, record Not Found"
+              }
+            }
+          }
+        },
+        "/assets": {
+          "post": {
+            "tags": [
+                "Assets"
+            ],
+            "description": "Create an asset. Asset ID must be two alpha characters (e.g., 'AS') that are case-insensitive, followed by three digits, padded left with zeros (e.g., '005').",
+            "parameters": [
+              {
+                "name": "body",
+                "in": "body",
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "AssetId": "AS-004",
+                    "SerialNumber": "EQ-934R2",
+                    "Brand": "Sony",
+                    "PurchaseDate": "18 Dec 2019",
+                    "Model": "Vista",
+                    "ModelNum": "VA-934",
+                    "PurchasePrice": "13900",
+                    "image": "https://images-na.ssl-images-amazon.com/images/I/71%2B%2B%2B%2Bq%2BqgL._AC_SL1500_.jpg",
+                    "PhysicalDescription": "4k display, 32GB RAM, 1TB SSD",
+                    "Status": "active",
+                    "Condition": "good",
+                    "Building": "West 3B",
+                    "User": "rsmithson@tesla.com"
+                  }
+                }
+              }
+            ],
+            "responses": {
+              "201": {
+                "description": "Record creation successful."
+              },
+              "400": {
+                "description": "Record creation unsuccessful. Bad Request - Invalid input or duplicate record found"
+              },
+              "500": {
+                "description": "Record creation unsuccessful. Internal Server Error"
+              }
+            }
+          }
+        },
+        "/assets/param/{paramType}/{paramValue}": {
+          "get": {
+            "tags": [
+                "Assets"
+            ],
+            "description": "Get assets by parameter type and value",
+            "parameters": [
+              {
+                "name": "paramType",
+                "in": "path",
+                "required": true,
+                "type": "string"
+              },
+              {
+                "name": "paramValue",
+                "in": "path",
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "OK"
+              }
+            }
+          }
+        },"/departments/": {
+          "get": {
+              "tags": [
+                  "Departments"
+              ],
+              "description": "Get all departments in MongoDB department API",
+              "parameters": [],
+              "responses": {
+                "200": {
+                  "description": "OK"
+                }
+              }
+            }
+          },
+          "/departments/{departmentId}": {
+            "get": {
+              "tags": [
+                  "Departments"
+              ],
+              "description": "Get single department by id (e.g., 'DE010'). department ID must be two alpha characters (e.g., 'DE') that are case-insensitive, followed by three digits, padded left with zeros (e.g., '005').",
+              "example": "'DE010', 'DE004', 'DE012'",
+              "parameters": [
+                {
+                  "name": "departmentId",
+                  "in": "path",
+                  "required": true,
+                  "type": "string"
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "OK"
+                }
+              }
+            },
+            "put": {
+              "tags": [
+                  "Departments"
+              ],
+              "description": "Update an department by id (e.g., 'DE010'). department ID must be two alpha characters (e.g., 'DE') that are case-insensitive, followed by three digits, padded left with zeros (e.g., '005').",
+              "example": "'DE010', 'DE004', 'DE012'",
+              "parameters": [
+                {
+                  "name": "departmentId",
+                  "in": "path",
+                  "required": true,
+                  "type": "string"
+                },
+                {
+                  "name": "body",
+                  "in": "body",
+                  "schema": {
+                    "type": "object",
+                    "example": {
+                      "departmentId": "D003",
+              "name": "Sales and Marketing",
+              "location": "Los Angeles, California",
+              "head": "Michael Johnson",
+              "employeesCount": 200,
+              "description": "Responsible for promoting and selling Tesla vehicles and managing customer relationships."
+            
+                    }
+                  }
+                }
+              ],
+              "responses": {
+                "204": {
+                  "description": "No Content"
+                },
+                "201": {
+                  "description": "Record updated successfully"
+                },
+                "500": {
+                  "description": "Internal Server Error"
+                }
+              }
+            },
+            "delete": {
+              "tags": [
+                  "Departments"
+              ],
+              "description": "Delete an department by id (e.g., 'DE010'). department ID must be two alpha characters (e.g., 'DE') that are case-insensitive, followed by three digits ('005').",
+              "example": "'DE010', 'DE004', 'DE012'",
+              "parameters": [
+                {
+                  "name": "departmentId",
+                  "in": "path",
+                  "required": true,
+                  "type": "string"
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "Record successfully deleted"
+                },
+                "500": {
+                  "description": "Record deletion unsuccessful. Internal Server Error"
+                },
+                "404": {
+                  "description": "Deletion unsuccessful, record Not Found"
+                }
+              }
+            }
+          },
+          "/departments": {
+            "post": {
+              "tags": [
+                  "Departments"
+              ],
+              "description": "Create an department. department ID must be two alpha characters (e.g., 'DE') that are case-insensitive, followed by three digits, padded left with zeros (e.g., '005').",
+              "parameters": [
+                {
+                  "name": "body",
+                  "in": "body",
+                  "schema": {
+                    "type": "object",
+                    "example": {
+                      "departmentId": "D003",
+              "name": "Sales and Marketing",
+              "location": "Los Angeles, California",
+              "head": "Michael Johnson",
+              "employeesCount": 200,
+              "description": "Responsible for promoting and selling Tesla vehicles and managing customer relationships."
+                    }
+                  }
+                }
+              ],
+              "responses": {
+                "201": {
+                  "description": "Record creation successful."
+                },
+                "400": {
+                  "description": "Record creation unsuccessful. Bad Request - Invalid input or duplicate record found"
+                },
+                "500": {
+                  "description": "Record creation unsuccessful. Internal Server Error"
+                }
+              }
+            }
+          },
+          "/departments/param/{paramType}/{paramValue}": {
+            "get": {
+              "tags": [
+                  "Departments"
+              ],
+              "description": "Get departments by parameter type and value",
+              "parameters": [
+                {
+                  "name": "paramType",
+                  "in": "path",
+                  "required": true,
+                  "type": "string"
+                },
+                {
+                  "name": "paramValue",
+                  "in": "path",
+                  "required": true,
+                  "type": "string"
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "OK"
+                }
+              }
+            }
+          },
+        "/buildings": {
+          "post": {
+            "tags": [
+                "Buildings"
+            ],
+            "description": "Create a new building record",
+            "parameters": [
+              {
+                "name": "body",
+                "in": "body",
+                "schema": {
+                "type": "array",
+                "example": [
+                  {
+                    "buildingId": "B001",
+                    "locationId": "L001",
+                    "name": "Main Building",
+                    "floors": 4,
+                    "departments": [
+                      "Research and Development",
+                      "Information Technology",
+                      "Human Resources"
+                    ]
+                  }
+                ]
+                }
+        }
+  ],
+  "responses": {
+    "200": {
+        "description": "OK"
+      }
+    }
+  },
+  "get": {
+    "tags": [
+        "Departments"
+    ],
+    "description": "Return a list of all buildings",
+  "responses": {
+    "200": {
+        "description": "OK"
+      }
+    }
+  }
+},
+"/buildings/{Id}": {
+  "get": {
+    "tags": [
+        "Buildings"
+    ],
+    "description": "Return a building matching the Id of the query",
+    "parameters": [
+      {
+        "name": "user",
+        "in": "path",
+        "type": "string"
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "OK"
+      }
+    }
+  },
+  "put": {
+    "tags": [
+        "Buildings"
+    ],
+    "description": "Update single building by id. Requires a valid Auth0 login token.",
+    "parameters": [
+      {
+        "name": "body",
+        "in": "body",
+        "schema": {
+          "type": "array",
+          "example": [
+          {
+            "buildingId": "B001",
+            "locationId": "L001",
+            "name": "Main Building",
+            "floors": 4,
+            "departments": [
+              "Research and Development",
+              "Information Technology",
+              "Human Resources"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "responses": {
+        "204": {
+        "description": "Update successful, no content to return."
+        },
+        "201": {
+            "description": "Update successful, record updated."
+        },
+        "500": {
+        "description": "Update unsuccessful, Internal Server Error"
+        }
+    }
+  }
+},
+"/buildings/name/{name}": {
+  "get": {
+    "tags": [
+        "Buildings"
+    ],
+    "parameters": [
+      {
+        "name": "user",
+        "in": "path",
+        "type": "string"
+      }
+    ],
+    "responses": {
+      "500": {
+      "description": "Get unsuccessful. Internal Server Error"
+      },
+      "200": {
+        "description": "OK"
+      }
+    }
+  }
+},
+"/buildings/location/{location}": {
+  "get": {
+    "tags": [
+        "Buildings"
+    ],
+    "parameters": [
+      {
+        "name": "user",
+        "in": "path",
+        "type": "string"
+      }
+    ],
+    "responses": {
+      "500": {
+      "description": "Get unsuccessful. Internal Server Error"
+      },
+      "200": {
+        "description": "OK"
+      }
+    }
+  }
+},
+"/buildings/delete/{Id}": {
+  "delete": {
+    "tags": [
+        "Buildings"
+    ],
+    "description": "Delete a single building by Id. Requires a valid Auth0 login token.",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "type": "string"
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Record successfully deleted"
+      },
+      "500": {
+        "description": "Record deletion unsuccessful. Internal Server Error"
+      },
+      "404": {
+        "description": "Deletion unsuccessful, record Not Found"
+      }
+    }
+  }
+},
+"/location/": {
+  "post": {
+    "tags": [
+      "Locations"
+    ],
+    "description": "Create a location document in database.",
+    "parameters": [
+      {
+        "name": "location",
+        "in": "body",
+        "schema": {
+          "type": "object",
+          "example": {
+            "locationId": "L004",
+            "name": "Gigafactory 1",
+            "address": "1 Electric Avenue, Sparks, Nevada",
+            "type": "Manufacturing",
+            "departments": [
+              "Battery Production",
+              "Powertrain Assembly"
+            ]
+          }
+        },
+        "required": true
+      }
+    ],
+    "responses": {
+      "201": {
+        "description": "Created"
+      },
+      "500": {
+        "description": "Internal Server Error"
+      }
+    }
+  }
+},
+"/location/{id}": {
+  "get": {
+    "tags": [
+      "Locations"
+    ],
+    "description": "Retrieve a single location from database by id.",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "type": "string"
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "OK"
+      },
+      "404": {
+        "description": "Location Not Found"
+      }
+    }
+  },
+  "put": {
+    "tags": [
+      "Locations"
+    ],
+    "description": "Update a location from database by id.",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "type": "string"
+      },
+      {
+        "name": "location",
+        "in": "body",
+        "schema": {
+          "type": "object",
+          "example": {
+            "locationId": "L004",
+            "name": "Gigafactory 1",
+            "address": "1 Electric Avenue, Sparks, Nevada",
+            "type": "Manufacturing",
+            "departments": [
+              "Battery Production",
+              "Powertrain Assembly"
+            ]
+          }
+        },
+        "required": true
+      }
+    ],
+    "responses": {
+      "201": {
+        "description": "Updated"
+      },
+      "500": {
+        "description": "Internal Server Error"
+      },
+      "404": {
+        "description": "Location Not Found"
+      }
+    }
+  },
+  "delete": {
+    "tags": [
+      "Locations"
+    ],
+    "description": "Delete a single location from database by id.",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "type": "string"
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Location successfully deleted"
+      },
+      "500": {
+        "description": "Location deletion unsuccessful. Internal Server Error"
+      },
+      "404": {
+        "description": "Deletion unsuccessful, location Not Found"
+      }
+    }
+  }
+},
+"/location/{name}": {
+  "get": {
+    "tags": [
+      "Locations"
+    ],
+    "description": "Retrieve a location from database by name.",
+    "parameters": [
+      {
+        "name": "name",
+        "in": "path",
+        "required": true,
+        "type": "string"
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "OK"
+      },
+      "404": {
+        "description": "Location Not Found"
+      }
+    }
+  }
+},
+"/location/{type}": {
+  "get": {
+    "tags": [
+      "Locations"
+    ],
+    "description": "Retrieve a single location from database by type.",
+    "parameters": [
+      {
+        "name": "type",
+        "in": "path",
+        "required": true,
+        "type": "string"
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "OK"
+      },
+      "404": {
+        "description": "Location Not Found"
+      }
+    }
+  }
+},
+"/location/{state}": {
+  "get": {
+    "tags": [
+      "Locations"
+    ],
+    "description": "Retrieve a single location from database by state.",
+    "parameters": [
+      {
+        "name": "state",
+        "in": "path",
+        "required": true,
+        "type": "string"
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "OK"
+      },
+      "404": {
+        "description": "Location Not Found"
+      }
+    }
+  }
+},
+"/locations/": {
+  "get": {
+    "tags": [
+      "Locations"
+    ],
+    "description": "Retrieve all locations from database.",
+    "parameters": [],
+    "responses": {
+      "200": {
+        "description": "OK"
+      }
+    }
+  }
+},
+"/user/": {
+  "get": {
+    "tags": [
+      "User"
+    ],
+    "description": "Get user account info.",
+    "parameters": [],
+    "responses": {
+      "200": {
+        "description": "OK"
+      },
+      "404": {
+        "description": "Unable to find user data"
+      },
+      "500": "Something went wrong"
+    }
+  },
+  "/user/": {
+    "delete": {
+      "tags": [
+        "User"
+      ],
+      "description": "Delete user account.",
+      "parameters": [],
+      "responses": {
+        "200": {
+          "description": "OK"
+        },
+        "404": {
+          "description": "Unable to find user data"
+        },
+        "500": "Something went wrong"
+      }
+    }
+  },
+  "put": {
+    "tags": [
+      "User"
+    ],
+    "description": "Update user account info.",
+    "parameters": [],
+    "responses": {
+      "204": {
+        "description": "OK"
+      },
+      "404": {
+        "description": "Unable to find user data"
+      },
+      "500": "Something went wrong"
+    }
+  },
+  "delete": {
+    "tags": [
+      "User"
+    ],
+    "description": "Delete user account.",
+    "parameters": [],
+    "responses": {
+      "200": {
+        "description": "OK"
+      },
+      "404": {
+        "description": "Unable to find user data"
+      },
+      "500": "Something went wrong"
+      }
+    }
+  },
+  "put": {
+    "tags": [
+      "User"
+    ],
+    "description": "Update user account info.",
+    "parameters": [],
+    "responses": {
+      "204": {
+        "description": "OK"
+      },
+      "404": {
+        "description": "Unable to find user data"
+      },
+      "500": "Something went wrong"
+    } 
+}
+      }
+}
+
